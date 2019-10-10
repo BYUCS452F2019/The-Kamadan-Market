@@ -1,4 +1,18 @@
 import express from 'express';
+import connector from 'knex';
+let knex = connector({
+    client: 'mysql',
+    connection: {
+      host : '127.0.0.1',
+      user : 'root',
+      password : process.env.DB_PASSWORD,
+      database : 'kamadan-market'
+    }
+});
+
+knex.raw('SELECT VERSION()')
+    .then(version => console.log(version[0][0]))
+    .catch(err => console.log(err))
 
 const app = express()
 
