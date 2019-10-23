@@ -1,4 +1,4 @@
-import knexConfig from './knexfile';
+import knexConfig from '../knexfile';
 import connector from 'knex';
 
 const knex = connector(knexConfig.development);

@@ -77,3 +77,7 @@ module.exports.insertUser = (req, res) => {
     
     res.status(200).send(user);
 };
+
+module.exports.getUser = (req, res) => {
+    res.status(200).send({})
+}
