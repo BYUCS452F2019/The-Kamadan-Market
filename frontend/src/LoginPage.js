@@ -1,8 +1,7 @@
 import React from 'react';
 import './App.css';
 import { withStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
+import { TextField, Button } from '@material-ui/core';
 
 const styles = {
     textFieldLeft: {
@@ -17,7 +16,20 @@ class LoginPage extends React.Component {
 
     constructor(props) {
         super(props);
-        console.log(props)
+        this.state = {
+            loginEmail: '',
+            loginPassword: '',
+            firstName: '',
+            lastName: '',
+            gamertag: '',
+            registerEmail: '',
+            registerPassword: '',
+            registerConfirmPassword: ''
+        }
+    }
+
+    async register() {
+        
     }
     
     render() {
@@ -31,11 +43,13 @@ class LoginPage extends React.Component {
                         <form noValidate autoComplete="off">
                             <TextField
                                 className={this.props.classes.textFieldLeft}
-                                label='Email'/>
+                                label='Email'
+                                onChange={event => this.setState({loginEmail: event.target.value})}/>
                             <TextField
                                 className={this.props.classes.textFieldRight}
                                 type='password'
-                                label='Password'/>
+                                label='Password'
+                                onChange={event => this.setState({loginPassword: event.target.value})}/>
                         <div className='login-page-button-container'>
                                 <Button variant="contained" color="primary">
                                     Log In
@@ -49,38 +63,44 @@ class LoginPage extends React.Component {
                             <div>
                                 <TextField
                                     className={this.props.classes.textFieldLeft}
-                                    label='First Name'/>
+                                    label='First Name'
+                                    onChange={event => this.setState({firstName: event.target.value})}/>
                                 <TextField
                                     className={this.props.classes.textFieldRight}
-                                    label='Last Name'/>
+                                    label='Last Name'
+                                    onChange={event => this.setState({lastName: event.target.value})}/>
                             </div>
                             <div>
                                 <TextField
                                     fullWidth
-                                    label='Gamertag'/>
+                                    label='Gamertag'
+                                    onChange={event => this.setState({gamertag: event.target.value})}/>
                             </div>
                             <div>
                                 <TextField
                                     fullWidth
-                                    label='Email'/>
+                                    label='Email'
+                                    onChange={event => this.setState({registerEmail: event.target.value})}/>
                             </div>
                             <div>
                                 <TextField
                                     fullWidth
                                     type='password'
-                                    label='Password'/>
+                                    label='Password'
+                                    onChange={event => this.setState({registerPassword: event.target.value})}/>
                             </div>
                             <div>
                                 <TextField
                                     fullWidth
                                     type='password'
-                                    label='Confirm Password'/>
+                                    label='Confirm Password'
+                                    onChange={event => this.setState({registerConfirmPassword: event.target.value})}/>
                             </div>
-                        <div className='login-page-button-container'>
+                            <div className='login-page-button-container'>
                                 <Button variant="contained" color="primary">
                                     Register
                                 </Button>
-                        </div>
+                            </div>
                         </form>
                     </div>
                 </div>
