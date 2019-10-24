@@ -26,58 +26,42 @@ const validateRegister = ajv.compile({
     }
 });
 
-const isEmailAvailable = (email) => {
-    let available;
-    knex('Users').select('*')
-        .where({email})
-        .then(rows => {
-            available = !rows.length;
-        });
-    return available;
+const isEmailAvailable = async (email) => {
+    let rows = await knex('Users').select('*')
+                        .where({email});
+    
+    console.log('Email Rows:', rows);
+    return !rows.length;
 };
 
-const isGamertagAvailable = (gamertag) => {
-    let available;
-    knex('Users').select('*')
-        .where({email})
-        .then(rows => {
-            available = !rows.length;
-        });
-    return available;
+const isGamertagAvailable = async (gamertag) => {
+    let rows = await knex('Users').select('*')
+                        .where({gamertag});
+    
+    console.log('Gamertag Rows:', rows);
+    return !rows.length;
 };
 
-module.exports.validateRegisterRequest = (req, res, next) => {
+module.exports.validateRegisterRequest = async (req, res, next) => {
 
     const valid = validateRegister(req.body);
-    
     if (!valid) {
         res.status(400).send(validateRegister.errors.message);
-    } else if (!isEmailAvailable(req.body.email)) {
+    } else if (! await isEmailAvailable(req.body.email)) {
         res.status(400).send('Email already registered');   
-    } else if (!isGamertagAvailable(req.body.gamertag)) {
+    } else if (! await isGamertagAvailable(req.body.gamertag)) {
         res.status(400).send('Gamertag taken'); 
     } else {
         next();
     }
 };
 
-module.exports.insertUser = (req, res) => {
-    let user;
-    knex('Users')
-        .insert(req.body)
-        .then(result => {
-            knex('Users')
-                .select('userID', 'gamertag', 'firstName', 'lastName', 'email')
-                .where({email: req.body.email})
-                .then(rows => {
-                    user = rows[0];
-                });
-    });
-
+module.exports.insertUser = async (req, res) => {
+    let insertRows = await knex('Users').insert(req.body);
+    console.log(insertRows);
+    let selectRows = await knex('Users')
+                            .select('userID', 'gamertag', 'firstName', 'lastName', 'email')
+                            .where({email: req.body.email});
     
-    res.status(200).send(user);
+    res.status(200).send(selectRows[0]);
 };
-
-module.exports.getUser = (req, res) => {
-    res.status(200).send({})
-}
