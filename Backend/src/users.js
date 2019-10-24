@@ -30,7 +30,6 @@ const isEmailAvailable = async (email) => {
     let rows = await knex('Users').select('*')
                         .where({email});
     
-    console.log('Email Rows:', rows);
     return !rows.length;
 };
 
@@ -38,7 +37,6 @@ const isGamertagAvailable = async (gamertag) => {
     let rows = await knex('Users').select('*')
                         .where({gamertag});
     
-    console.log('Gamertag Rows:', rows);
     return !rows.length;
 };
 
@@ -65,3 +63,7 @@ module.exports.insertUser = async (req, res) => {
     
     res.status(200).send(selectRows[0]);
 };
+
+module.exports.getUser = (req, res) => {
+    res.status(200).send({})
+}
