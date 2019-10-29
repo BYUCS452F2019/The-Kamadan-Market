@@ -10,6 +10,8 @@ app.use(bodyParser.json());
 
 app.post('/api/users/', [users.validateRegisterRequest, users.insertUser]);
 
+app.post('/api/users/login/', [users.validateLoginRequest, users.loginUser])
+
 app.get('/api/users/:id', [users.getUser]);
 
 app.get('/api/posts', [posts.getPosts]);
