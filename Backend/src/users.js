@@ -102,5 +102,16 @@ module.exports.loginUser = async (req, res) => {
 };
 
 module.exports.getUser = (req, res) => {
-    res.status(200).send({})
+    knex.from('users')
+        .select('userID', 'gamertag', 'firstName', 'lastName', 'email')
+        .where('userID', req.params.id)
+        .then((userArr) => {
+            if(userArr.length < 1) {
+                return res.status(400).send('User does not exist!')
+            }
+            return res.status(200).send(userArr[0])
+        })
+        .catch((err) => {
+            return res.status(400).send(err)
+        })
 }
