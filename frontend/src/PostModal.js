@@ -1,6 +1,8 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { Modal, Button, Paper, TextField, MenuItem } from '@material-ui/core';
+import { Autocomplete } from '@material-ui/lab';
+import API from './API';
 
 const styles = {
     paper: {
@@ -28,24 +30,26 @@ const styles = {
     }
 };
 
-const itemTypes = [
-   'Sword',
-   'Shield',
-   'Armor',
-   'Bow',
-   'Staff',
-   'Helmet'
-];
-
 class PostModal extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            currentItemType: '',
             isSelling: true,
-            askingGold: 0
+            askingGold: 0,
+            description: ''
         };
+    }
+
+    async createPost() {
+        try {
+            await API.post('posts/', {
+                userID: '',
+                itemID: '',
+            });
+        } catch (err) {
+            console.log(err);
+        }
     }
 
     render() {
@@ -58,7 +62,7 @@ class PostModal extends React.Component {
                         <div className='modal-options'>
                             <TextField
                                 select
-                                label="Select Item Type"
+                                label="Select Item Names"
                                 className={this.props.classes.dropdown}
                                 value={this.state.currentItemType}
                                 onChange={(event) => this.setState({currentItemType: event.target.value})}
@@ -70,9 +74,9 @@ class PostModal extends React.Component {
                                 margin="normal"
                                 variant="outlined"
                                 >
-                                {itemTypes.map(option => (
-                                    <MenuItem key={option} value={option}>
-                                        {option}
+                                {this.props.items.map(option => (
+                                    <MenuItem key={option.itemID} value={option.itemName}>
+                                        {option.itemName}
                                     </MenuItem>
                                 ))}
                             </TextField>

@@ -8,7 +8,7 @@ module.exports.getItems = async (req, res) => {
         let response = await knex('Items').select('*').where('Items.itemName', 'like', '%' + req.query.keyWords + '%')
         res.status(200).send(response);
     }else {
-        let response = await knex('Items').select('*')
+        let response = await knex('Items').select('*').limit(100)
         res.status(200).send(response);
     }
 };

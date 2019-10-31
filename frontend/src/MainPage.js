@@ -38,7 +38,8 @@ class MainPage extends React.Component {
             user: props.user,
             posts: [],
             modalOpen: false,
-            searchValue: ''
+            searchValue: '',
+            items: []
         };
         this.handleModalClose = this.handleModalClose.bind(this);
         this.getPosts = this.getPosts.bind(this);
@@ -46,13 +47,24 @@ class MainPage extends React.Component {
     }
 
     componentDidMount() {
-        this.getPosts()
+        this.getPosts();
+        this.getItems();
     }
 
     async getPosts() {
         try {
             const {data} = await API.get('posts/');
             this.setState({posts: data});
+        } catch (ex) {
+            console.log(ex);
+        }
+    }
+
+    async getItems() {
+        try {
+            const {data} = await API.get('items/');
+            this.setState({items: data});
+            console.log("items: ", data);
         } catch (ex) {
             console.log(ex);
         }
@@ -97,7 +109,7 @@ class MainPage extends React.Component {
                 <div className='posts-container'>
                     {this.state.posts.map(post => <Post key={post.postID} {...post} />)}
                 </div>
-                <PostModal open={this.state.modalOpen} handleClose={this.handleModalClose} />
+                <PostModal open={this.state.modalOpen} handleClose={this.handleModalClose} items={this.state.items} />
             </div>
         );
     }
