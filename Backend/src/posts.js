@@ -43,7 +43,7 @@ module.exports.getPosts = (req, res) => {
         .orderBy('time')
         .offset(0)
         .limit(20)
-        .where('Items.itemName', 'ilike', '%' + req.query.keyWords + '%')
+        .where('Items.itemName', 'like', '%' + req.query.keyWords + '%')
         .join('Users', 'Users.userID', '=', 'Posts.userID')
         .join('Items', 'Items.itemID', '=', 'Posts.itemID')
         .join('ItemType', 'ItemType.typeID', '=', 'Items.typeID')
