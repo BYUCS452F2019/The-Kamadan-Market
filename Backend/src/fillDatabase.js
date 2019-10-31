@@ -102,10 +102,10 @@ let generatePostBarterOptions = async (posts, items) => {
 let generateRandomPosts = async (items, userIDs) => {
     console.log('Generating random posts')
     let posts = []
-    let isSelling = getRndInteger(0,1) == 0
     for(let i = 0; i < 10000; i++) {
         let randItem = getRndInteger(0, items.length - 1)
         let randUser = getRndInteger(0, userIDs.length - 1)
+        let isSelling = getRndInteger(0,1) == 0
         let newPost = {
             userID: userIDs[randUser],
             itemID: items[randItem].itemID,
