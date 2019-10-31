@@ -4,8 +4,13 @@ import knex from './connection';
 const ajv = new Ajv();
 
 module.exports.getItems = async (req, res) => {
-    let response = await knex('Items').select('*')
-    res.status(200).send(response);
+    if(req.query && req.query.keyWords && req.query.keyWords != '') {
+        let response = await knex('Items').select('*').where('Items.itemName', 'like', '%' + req.query.keyWords + '%')
+        res.status(200).send(response);
+    }else {
+        let response = await knex('Items').select('*')
+        res.status(200).send(response);
+    }
 };
 
 module.exports.defineItemType = async (typeName) => {
