@@ -4,7 +4,8 @@ import knex from './connection';
 const ajv = new Ajv();
 
 module.exports.getItems = (req, res) => {
-    res.status(200).send([]);
+    let response = await knex.from('Items').select('*')
+    res.status(200).send(response);
 };
 
 module.exports.defineItemType = async (typeName) => {
