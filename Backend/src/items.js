@@ -3,7 +3,7 @@ import knex from './connection';
 
 const ajv = new Ajv();
 
-module.exports.getItems = (req, res) => {
+module.exports.getItems = async (req, res) => {
     let response = await knex.from('Items').select('*')
     res.status(200).send(response);
 };
