@@ -21,6 +21,10 @@ app.get('/api/posts', [posts.getPosts]);
 
 app.post('/api/posts', [posts.validateCreatePost, posts.createPost]);
 
+app.delete('/api/posts/:postID', [posts.deletePost])
+
+app.put('/api/posts/:postID', [posts.updatePost])
+
 app.get('/api/items', [items.getItems]);
 
 app.listen(8080, () =>

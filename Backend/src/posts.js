@@ -110,3 +110,13 @@ module.exports.getUserPosts = async (req, res) => {
                             .join('ItemType', 'ItemType.typeID', '=', 'Items.typeID')
     res.status(200).send(responses)
 }
+
+module.exports.deletePost = async (req, res) => {
+    await knex('Posts').where({postID: req.params.postID}).del()
+    res.status(200).send()
+}
+
+module.exports.updatePost = async (req, res) => {
+    await knex('Posts').where({postID: req.params.postID}).update(req.body)
+    res.status(200).send()
+}
