@@ -72,6 +72,11 @@ module.exports.getPosts = (req, res) => {
     }
 }
 
+let newPost = async (postInfo) => {
+    let results = await knex('Posts').insert(postInfo)
+    return results[0]
+}
+
 module.exports.createPost = async (req, res) => {
     if(!req.body) {
         res.status(400).send('ERROR. No attributes provided')
@@ -88,10 +93,7 @@ module.exports.createPost = async (req, res) => {
     }
 }
 
-module.exports.newPost = async (postInfo) => {
-    let results = await knex('Posts').insert(postInfo)
-    return results[0]
-}
+module.exports.newPost = newPost
 
 module.exports.newBarter = async (barterInfo) => {
     let results = await knex('BarterOptions').insert(barterInfo)
