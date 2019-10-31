@@ -5,7 +5,6 @@ import { Paper, InputBase, IconButton, Divider, Button } from '@material-ui/core
 import SearchIcon from '@material-ui/icons/Search';
 import PostModal from './PostModal';
 import Post from './Post';
-import moment from 'moment';
 
 const styles = {
     searchBar: {
@@ -37,22 +36,35 @@ class MainPage extends React.Component {
 
         this.state = {
             user: props.user,
-            posts: [
-                {
-                    postID: '1',
-                    userID: '8',
-                    gamertag: 'dspence',
-                    itemName: 'Sword of Destiny',
-                    itemType: 'Sword',
-                    description: 'Bacon ipsum dolor amet ut salami officia deserunt. Aute beef ribs culpa cow esse ipsum. Aute ribeye lorem corned beef short loin mollit. Anim reprehenderit strip steak, ea pork enim cupidatat bresaola pariatur adipisicing.',
-                    isSelling: true,
-                    time:  moment(),
-                    goldCost: 100
-                }
-            ],
-            modalOpen: false
+            posts: [],
+            modalOpen: false,
+            searchValue: ''
         };
         this.handleModalClose = this.handleModalClose.bind(this);
+        this.getPosts = this.getPosts.bind(this);
+        this.search = this.search.bind(this);
+    }
+
+    componentDidMount() {
+        this.getPosts()
+    }
+
+    async getPosts() {
+        try {
+            const {data} = await API.get('posts/');
+            this.setState({posts: data});
+        } catch (ex) {
+            console.log(ex);
+        }
+    }
+
+    async search() {
+        try {
+            const {data} = await API.get(`posts?keyWords=${this.state.searchValue}`);
+            this.setState({posts: data});
+        } catch (ex) {
+            console.log(ex);
+        }
     }
 
     handleModalClose() {
@@ -66,10 +78,11 @@ class MainPage extends React.Component {
                     <InputBase
                         className={this.props.classes.searchBarInput}
                         placeholder="Search"
+                        onChange={(e) => this.setState({searchValue: e.target.value})}
                         inputProps={{ 'aria-label': 'search google maps' }}
                     />
                     <Divider className={this.props.classes.searchDivider} orientation="vertical" />
-                    <IconButton className={this.props.classes.searchIconButton} aria-label="search">
+                    <IconButton className={this.props.classes.searchIconButton} aria-label="search" onClick={this.search}>
                         <SearchIcon />
                     </IconButton>
                 </Paper>

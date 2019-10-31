@@ -1,12 +1,14 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import { Button, Paper, TextField } from '@material-ui/core';
+import { Paper } from '@material-ui/core';
+import moment from 'moment';
 
 const styles = {
     paper: {
         width: '100%',
         textAlign: 'left',
-        padding: 10
+        padding: 10,
+        marginBottom: 10
     },
     button: {
         margin: 5
@@ -28,11 +30,12 @@ class Post extends React.Component {
                     <div className='post-item-name'>{this.props.itemName}</div>
                     <div className='post-buy-or-sell'>{this.props.isSelling ? 'Selling' : 'Buying'}</div>
                 </div>
-                <div className='post-subtitle'>{this.props.itemType}</div>
-                <p className='post-description'>{this.props.description}</p>
+                <div className='post-subtitle'>{this.props.typeName}</div>
+                <p className='post-description'>{this.props.postText}</p>
                 <div className='post-footer'>
                     <div className='post-gamertag'>{this.props.gamertag}</div>
-                    <div className='post-date'>{this.props.time.fromNow()}</div>
+                    <div className='post-gold-cost'>Gold cost: {this.props.goldCost}</div>
+                    <div className='post-date'>{moment(this.props.time).fromNow()}</div>
                 </div>
             </Paper>           
         );
