@@ -85,8 +85,12 @@ class MainPage extends React.Component {
     }
 
     async viewMyPosts() {
-        const {data} = await API.get('/posts/' + this.props.user.userID)
-        this.setState({posts: data})
+        try {
+            const {data} = await API.get('/posts/' + this.props.user.userID)
+            this.setState({posts: data})
+        } catch(ex) {
+            console.error(ex)
+        }
     }
 
     render() {
