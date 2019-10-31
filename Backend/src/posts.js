@@ -9,10 +9,10 @@ const validateCreate = ajv.compile({
     required: ['userID', 'itemID', 'postText', 'goldCost', 'isSelling'],
     properties: {
         userID: {
-            type: 'string'
+            type: 'integer'
         },
         itemID: {
-            type: 'string'
+            type: 'integer'
         },
         postText: {
             type: 'string'
