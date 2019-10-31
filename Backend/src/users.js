@@ -6,6 +6,7 @@ const ajv = new Ajv();
 const validateRegister = ajv.compile({
     additionalProperties: false,
     type: 'object',
+    required: ['firstName', 'lastName', 'gamertag', 'email', 'password'],
     properties: {
         firstName: {
             type: 'string'
@@ -26,6 +27,21 @@ const validateRegister = ajv.compile({
     }
 });
 
+const validateLogin = ajv.compile({
+    additionalProperties: false,
+    type: 'object',
+    required: ['email', 'password'],
+    properties: {
+        email: {
+            type: 'string',
+            format: 'email'
+        },
+        password: {
+            type: 'string'
+        }
+    }
+})
+
 const isEmailAvailable = async (email) => {
     let rows = await knex('Users').select('*')
                         .where({email});
@@ -44,24 +60,45 @@ module.exports.validateRegisterRequest = async (req, res, next) => {
 
     const valid = validateRegister(req.body);
     if (!valid) {
-        res.status(400).send(validateRegister.errors.message);
+        return res.status(400).json('Please enter a valid email');
     } else if (! await isEmailAvailable(req.body.email)) {
-        res.status(400).send('Email already registered');   
+        return res.status(400).json('Email already registered');   
     } else if (! await isGamertagAvailable(req.body.gamertag)) {
-        res.status(400).send('Gamertag taken'); 
+        return res.status(400).json('Gamertag taken'); 
     } else {
         next();
     }
 };
 
 module.exports.insertUser = async (req, res) => {
-    let insertRows = await knex('Users').insert(req.body);
-    console.log(insertRows);
+    await knex('Users').insert(req.body);
     let selectRows = await knex('Users')
                             .select('userID', 'gamertag', 'firstName', 'lastName', 'email')
                             .where({email: req.body.email});
     
-    res.status(200).send(selectRows[0]);
+    res.status(200).json(selectRows[0]);
+};
+
+module.exports.validateLoginRequest = (req, res, next) => {
+    let valid = validateLogin(req.body);
+    if (!valid) {
+        return res.status(400).json('Please enter a valid email');
+    }
+    next();
+};
+
+module.exports.loginUser = async (req, res) => {
+    const rows = await knex('Users')
+                            .select('userID', 'gamertag', 'firstName', 'lastName', 'email')
+                            .where({
+                                email: req.body.email,
+                                password: req.body.password
+                            });
+    if (!rows.length) {
+        return res.status(401).json('Invalid email or password');
+    } else {
+        return res.status(200).send(rows[0]);
+    }
 };
 
 module.exports.createUser = async (userInfo) => {
