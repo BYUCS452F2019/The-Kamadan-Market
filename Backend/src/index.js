@@ -15,6 +15,8 @@ app.post('/api/users/login/', [users.validateLoginRequest, users.loginUser])
 
 app.get('/api/users/:id', [users.getUser]);
 
+app.get('/api/posts/:userID', [posts.getUserPosts])
+
 app.get('/api/posts', [posts.getPosts]);
 
 app.post('/api/posts', [posts.validateCreatePost, posts.createPost]);

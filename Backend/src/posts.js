@@ -97,3 +97,16 @@ module.exports.newBarter = async (barterInfo) => {
     let results = await knex('BarterOptions').insert(barterInfo)
     return results[0]
 }
+
+module.exports.getUserPosts = async (req, res) => {
+    let responses = await knex('Posts')
+                            .select('*')
+                            .orderBy('time')
+                            .offset(0)
+                            .limit(20)
+                            .where('Users.userID', '=', req.params.userID)
+                            .join('Users', 'Users.userID', '=', 'Posts.userID')
+                            .join('Items', 'Items.itemID', '=', 'Posts.itemID')
+                            .join('ItemType', 'ItemType.typeID', '=', 'Items.typeID')
+    res.status(200).send(responses)
+}
