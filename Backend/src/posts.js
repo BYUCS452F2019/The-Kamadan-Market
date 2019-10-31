@@ -48,6 +48,7 @@ module.exports.getPosts = (req, res) => {
             .limit(20)
             .join('Users', 'Users.userID', '=', 'Posts.userID')
             .join('Items', 'Items.itemID', '=', 'Posts.itemID')
+            .join('ItemType', 'ItemType.typeID', '=', 'Items.typeID')
             .then((posts) => {
                 return res.status(200).send(posts)
             })
