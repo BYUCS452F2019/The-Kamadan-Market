@@ -1,7 +1,6 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { Modal, Button, Paper, TextField, MenuItem } from '@material-ui/core';
-import { Autocomplete } from '@material-ui/lab';
 import API from './API';
 
 const styles = {
@@ -37,16 +36,26 @@ class PostModal extends React.Component {
         this.state = {
             isSelling: true,
             askingGold: 0,
-            description: ''
+            description: '',
+            currentItemName: ''
         };
+        this.createPost = this.createPost.bind(this);
     }
 
     async createPost() {
+        console.log(this.props.items.find((el) => el.itemName === this.state.currentItemName))
+        let body = {
+            userID: this.props.currentUserId,
+            itemID: this.props.items.find((el) => el.itemName === this.state.currentItemName).itemID,
+            postText: this.state.description,
+            goldCost: parseInt(this.state.askingGold),
+            isSelling: this.state.isSelling
+        }
+        console.log(body);
         try {
-            await API.post('posts/', {
-                userID: '',
-                itemID: '',
-            });
+            await API.post('posts/', body);
+            this.props.reloadPosts();
+            this.props.handleClose();
         } catch (err) {
             console.log(err);
         }
@@ -64,8 +73,8 @@ class PostModal extends React.Component {
                                 select
                                 label="Select Item Names"
                                 className={this.props.classes.dropdown}
-                                value={this.state.currentItemType}
-                                onChange={(event) => this.setState({currentItemType: event.target.value})}
+                                value={this.state.currentItemName}
+                                onChange={(event) => this.setState({currentItemName: event.target.value})}
                                 SelectProps={{
                                     MenuProps: {
                                         className: this.props.classes.menu,
@@ -120,13 +129,14 @@ class PostModal extends React.Component {
                             multiline
                             rows="4"
                             className={this.props.classes.textField}
+                            onChange={(e) => this.setState({description: e.target.value})}
                             margin="normal"
                             variant="outlined" />
                         <div className='modal-buttons'>
                             <Button variant="contained" color="default" className={this.props.classes.button} onClick={this.props.handleClose}>
                                 Cancel
                             </Button>
-                            <Button variant="contained" color="primary" className={this.props.classes.button}>
+                            <Button variant="contained" color="primary" className={this.props.classes.button} onClick={this.createPost}>
                                 Create
                             </Button>
                         </div>

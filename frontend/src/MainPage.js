@@ -109,7 +109,7 @@ class MainPage extends React.Component {
                 <div className='posts-container'>
                     {this.state.posts.map(post => <Post key={post.postID} {...post} />)}
                 </div>
-                <PostModal open={this.state.modalOpen} handleClose={this.handleModalClose} items={this.state.items} />
+                <PostModal open={this.state.modalOpen} handleClose={this.handleModalClose} items={this.state.items} reloadPosts={this.getPosts} currentUserId={this.props.user.userID} />
             </div>
         );
     }

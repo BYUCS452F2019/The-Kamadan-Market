@@ -9,13 +9,7 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      user: {
-        userID: 8,
-        gamertag: 'dspence',
-        firstName: 'Danny',
-        lastName: 'Spencer',
-        email: 'danny@email.com'
-      }
+      user: null
     }
 
     this.setUser = this.setUser.bind(this);
