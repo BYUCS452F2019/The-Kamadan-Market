@@ -64,6 +64,11 @@ module.exports.insertUser = async (req, res) => {
     res.status(200).send(selectRows[0]);
 };
 
+module.exports.createUser = async (userInfo) => {
+    let insertRows = await knex('Users').insert(userInfo)
+    return insertRows[0]
+}
+
 module.exports.getUser = (req, res) => {
     knex.from('users')
         .select('userID', 'gamertag', 'firstName', 'lastName', 'email')
