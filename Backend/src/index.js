@@ -3,10 +3,11 @@ import bodyParser from 'body-parser';
 import users from './users';
 import posts from './posts';
 import items from './items';
+import cors from 'cors';
 
 const app = express();
 
-app.use(bodyParser.json());
+app.use([bodyParser.json(), cors()]);
 
 app.post('/api/users/', [users.validateRegisterRequest, users.insertUser]);
 
