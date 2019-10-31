@@ -46,6 +46,8 @@ module.exports.getPosts = (req, res) => {
             .orderBy('time')
             .offset(0)
             .limit(20)
+            .join('Users', 'Users.userID', '=', 'Posts.userID')
+            .join('Items', 'Items.itemID', '=', 'Posts.itemID')
             .then((posts) => {
                 return res.status(200).send(posts)
             })
