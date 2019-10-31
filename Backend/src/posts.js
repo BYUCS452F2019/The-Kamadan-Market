@@ -72,8 +72,18 @@ module.exports.getPosts = (req, res) => {
     }
 }
 
-module.exports.createPost = (req, res) => {
-    res.status(200).send({})
+module.exports.createPost = async (req, res) => {
+    if(!req.body) {
+        res.status(400).send('ERROR. No attributes provided')
+    }
+    const { userID, postText, itemID, goldCost, isSelling } = req.body
+    if(userID && postText && itemID && goldCost && isSelling != null) {
+        await newPost({
+            ...(req.body),
+            active: true
+        })
+        res.status(200).send()
+    }
 }
 
 module.exports.newPost = async (postInfo) => {
