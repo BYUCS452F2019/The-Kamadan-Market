@@ -44,6 +44,7 @@ class MainPage extends React.Component {
         this.handleModalClose = this.handleModalClose.bind(this);
         this.getPosts = this.getPosts.bind(this);
         this.search = this.search.bind(this);
+        this.viewMyPosts = this.viewMyPosts.bind(this)
     }
 
     componentDidMount() {
@@ -83,6 +84,11 @@ class MainPage extends React.Component {
         this.setState({modalOpen: false})
     }
 
+    async viewMyPosts() {
+        const {data} = await API.get('/posts/' + this.props.user.userID)
+        this.setState({posts: data})
+    }
+
     render() {
         return (
             <div className='main-page'>
@@ -102,7 +108,7 @@ class MainPage extends React.Component {
                     <Button variant="contained" color="primary" className={this.props.classes.button} onClick={() => this.setState({modalOpen: true})}>
                         Create Post
                     </Button>
-                    <Button variant="contained" color="primary" className={this.props.classes.button}>
+                    <Button variant="contained" color="primary" className={this.props.classes.button} onClick={this.viewMyPosts}>
                         View My Posts
                     </Button>
                 </div>
