@@ -83,6 +83,8 @@ module.exports.createPost = async (req, res) => {
             active: true
         })
         res.status(200).send()
+    }else{
+        res.status(400).send('Missing attributes!')
     }
 }
 
