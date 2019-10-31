@@ -38,7 +38,21 @@ module.exports.validateCreatePost = (req, res, next) => {
 
 module.exports.getPosts = (req, res) => {
     if(req.query && req.query.keyWords && req.query.keyWords != '') { // Get 20 specific posts
-        
+        knex.from('Posts')
+        .select('*')
+        .orderBy('time')
+        .offset(0)
+        .limit(20)
+        .where('Items.itemName', 'ilike', '%' + req.query.keyWords + '%')
+        .join('Users', 'Users.userID', '=', 'Posts.userID')
+        .join('Items', 'Items.itemID', '=', 'Posts.itemID')
+        .join('ItemType', 'ItemType.typeID', '=', 'Items.typeID')
+        .then((posts) => {
+            return res.status(200).send(posts)
+        })
+        .catch((err) => {
+            return res.status(400).send(err)
+        })
     }
     else { // Get the top 20 most recent
         knex.from('Posts')
@@ -55,7 +69,6 @@ module.exports.getPosts = (req, res) => {
             .catch((err) => {
                 return res.status(400).send(err)
             })
-
     }
 }
 
