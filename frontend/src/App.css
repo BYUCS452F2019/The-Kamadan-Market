@@ -1,7 +1,15 @@
 @import './LoginPage.css';
+@import './MainPage.css';
+@import './Post.css';
+
+body {
+  background: #eee;
+}
 
 .app {
   font-family: 'Roboto', sans-serif;
   color: #2b2f33;
   text-align: center;
+  margin: auto;
+  width: 50%;
 }

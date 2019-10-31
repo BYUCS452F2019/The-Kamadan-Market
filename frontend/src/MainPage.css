@@ -1,0 +1,9 @@
+.main-page {
+    margin-top: 2em;
+}
+
+.modal-buttons {
+    padding: 2px 8px;
+    display: flex;
+    justify-content: flex-end;
+}

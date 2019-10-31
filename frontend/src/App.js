@@ -1,5 +1,6 @@
 import React from 'react';
 import LoginPage from './LoginPage';
+import MainPage from './MainPage';
 import './App.css';
 
 class App extends React.Component {
@@ -8,7 +9,13 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      user: null
+      user: {
+        userID: 8,
+        gamertag: 'dspence',
+        firstName: 'Danny',
+        lastName: 'Spencer',
+        email: 'danny@email.com'
+      }
     }
 
     this.setUser = this.setUser.bind(this);
@@ -21,7 +28,11 @@ class App extends React.Component {
   render() {
     return (
       <div className="app">
-        <LoginPage setUser={this.setUser} />
+        {this.state.user ?
+          <MainPage user={this.state.user} />
+          :
+          <LoginPage setUser={this.setUser} />
+        }
       </div>
     );
   }

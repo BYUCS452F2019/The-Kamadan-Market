@@ -1,5 +1,4 @@
 import React from 'react';
-import './App.css';
 import API from './API';
 import { withStyles } from '@material-ui/core/styles';
 import { TextField, Button } from '@material-ui/core';

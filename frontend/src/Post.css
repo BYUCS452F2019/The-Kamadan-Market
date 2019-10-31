@@ -1,0 +1,44 @@
+
+.post-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.post-footer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.post-item-name {
+    font-size: 1.3em;
+    font-weight: bold;
+}
+
+.post-buy-or-sell {
+    background-color: #673ab7;
+    padding: 5px 10px;
+    color: white;
+    border-radius: 5px;
+}
+
+.post-buy-or-sell.buying {
+    background-color: #9c27b0;
+}
+
+.post-subtitle {
+    font-size: 0.9em;
+    color: #777
+}
+
+.post-description {
+    font-size: 0.9em;
+}
+
+.post-footer {
+    font-size: 0.8em;
+}
+
+.post-gamertag {
+    font-weight: bold;
+}
+
