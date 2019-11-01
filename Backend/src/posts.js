@@ -57,7 +57,7 @@ module.exports.getPosts = (req, res) => {
     else { // Get the top 20 most recent
         knex.from('Posts')
             .select('*')
-            .orderBy('time')
+            .orderBy('time', 'desc')
             .offset(0)
             .limit(20)
             .join('Users', 'Users.userID', '=', 'Posts.userID')
