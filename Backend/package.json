@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "babel src -d dist",
     "start": "npm run build && node dist/index.js",
-    "fill": "npm run build && node dist/fillDatabase.js"
+    "fill": "npm run build && node dist/fillDatabase.js",
+    "mongoFill": "npm run build && node dist/fillMongo.js"
   },
   "author": "",
   "license": "ISC",
@@ -23,6 +24,7 @@
     "express": "^4.17.1",
     "knex": "^0.19.5",
     "lodash": "^4.17.15",
+    "mongodb": "^3.3.4",
     "mysql": "^2.17.1",
     "random-name": "^0.1.2"
   },
