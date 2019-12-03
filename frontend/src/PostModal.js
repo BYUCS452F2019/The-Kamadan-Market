@@ -32,18 +32,11 @@ const styles = {
 class PostModal extends React.Component {
     constructor(props) {
         super(props);
-
-        this.state = {
-            isSelling: true,
-            askingGold: 0,
-            description: '',
-            currentItemName: ''
-        };
         this.createPost = this.createPost.bind(this);
     }
 
     async createPost() {
-        console.log(this.props.items.find((el) => el.itemName === this.state.currentItemName))
+        console.log(this.props.items.find((el) => el.itemName === this.props.currentItemName))
         let body = {
             userID: this.props.currentUserId,
             itemID: this.props.items.find((el) => el.itemName === this.state.currentItemName).itemID,

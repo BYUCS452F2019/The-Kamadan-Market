@@ -39,12 +39,20 @@ class MainPage extends React.Component {
             posts: [],
             modalOpen: false,
             searchValue: '',
-            items: []
+            items: [],
+            editingPost: {
+                isSelling: this.props.isSelling || true,
+                askingGold: this.props.askingGold || 0,
+                description: this.props.postText || '',
+                currentItemName: this.props.itemName || '',
+            },
+            editing: false
         };
         this.handleModalClose = this.handleModalClose.bind(this);
         this.getPosts = this.getPosts.bind(this);
         this.search = this.search.bind(this);
-        this.viewMyPosts = this.viewMyPosts.bind(this)
+        this.viewMyPosts = this.viewMyPosts.bind(this);
+        this.editPost = this.editPost.bind(this);
     }
 
     componentDidMount() {
@@ -81,7 +89,15 @@ class MainPage extends React.Component {
     }
 
     handleModalClose() {
-        this.setState({modalOpen: false})
+        this.setState({modalOpen: false, editingPost: {}, editing: false})
+    }
+
+    editPost(post) {
+        this.setState({
+            modalOpen: true,
+            editingPost: post,
+            editing: true
+        });
     }
 
     async viewMyPosts() {
@@ -117,9 +133,9 @@ class MainPage extends React.Component {
                     </Button>
                 </div>
                 <div className='posts-container'>
-                    {this.state.posts.map(post => <Post key={post.postID} {...post} />)}
+                    {this.state.posts.map(post => <Post key={post.postID} {...post} currentUserId={this.state.user.userID} editPost={this.editPost} />)}
                 </div>
-                <PostModal open={this.state.modalOpen} handleClose={this.handleModalClose} items={this.state.items} reloadPosts={this.getPosts} currentUserId={this.props.user.userID} />
+                <PostModal open={this.state.modalOpen} handleClose={this.handleModalClose} items={this.state.items} reloadPosts={this.getPosts} currentUserId={this.props.user.userID} {...this.state.editingPost} editing={this.state.editing}/>
             </div>
         );
     }

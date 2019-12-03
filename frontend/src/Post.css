@@ -8,6 +8,7 @@
     display: flex;
     justify-content: space-between;
     font-size: 0.8em;
+    align-items: flex-end;
 }
 
 .post-item-name {
@@ -28,7 +29,9 @@
 
 .post-subtitle {
     font-size: 0.9em;
-    color: #777
+    color: #777;
+    display: flex;
+    align-items: center;
 }
 
 .post-description {
@@ -39,3 +42,27 @@
     font-weight: bold;
 }
 
+.post-edit-delete {
+    font-weight: normal;
+    margin-top: 5px;
+}
+
+.post-edit:hover {
+    cursor: pointer;
+    color: #000;
+    text-decoration: underline;
+}
+
+.post-delete:hover {
+    cursor: pointer;
+    color: red;
+    text-decoration: underline;
+}
+
+.post-item-icon {
+    font-size: 1.3em;
+    margin-right: 10px;
+}
+.post-gold-cost {
+    display: flex;
+}
