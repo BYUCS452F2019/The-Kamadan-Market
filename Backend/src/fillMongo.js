@@ -91,7 +91,7 @@ let generatePosts = async (users, items) => {
         }
         posts.push(newPost)
     }
-    // add to DB
+    // add to DB, create index
     return await postsDB.createPost(posts)
 }
 
