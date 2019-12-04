@@ -1,5 +1,15 @@
 import { getDBConnection } from './mongoConnection'
 
+module.exports.getItems = async () => {
+    let connection = await getDBConnection()
+    let db = connection["db"]
+    let resp = await db.collection("Items").find({}, {
+        sort: [["_id", "desc"]]
+    }).toArray()
+    connection["client"].close()
+    return resp
+}
+
 module.exports.defineItem = async (itemInfo) => {
     let connection = await getDBConnection()
     let db = connection["db"]

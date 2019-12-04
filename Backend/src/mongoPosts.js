@@ -4,6 +4,21 @@ let addLowerItemName =  (post) => {
     post.itemNameLower = post.item.itemName.toLowerCase()
 }
 
+module.exports.getPosts = async (keyWord) => {
+    let connection = await getDBConnection()
+    let db = connection["db"]
+    let reg = new RegExp("%" + keyWord ? keyWord.toLowerCase() : "" + "%")
+    console.log(reg)
+    let resp = await db.collection("Posts").find({
+        itemNameLower: reg
+    }, {
+        sort: [["_id", "desc"]]
+    }).toArray()
+    connection["client"].close()
+    console.log(resp)
+    return resp
+}
+
 module.exports.createPost = async (postInfo) => {
     let connection = await getDBConnection()
     let db = connection["db"]
