@@ -15,7 +15,6 @@ module.exports.getPosts = async (keyWord) => {
         sort: [["_id", "desc"]]
     }).toArray()
     connection["client"].close()
-    console.log(resp)
     return resp
 }
 
