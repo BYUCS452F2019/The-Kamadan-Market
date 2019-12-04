@@ -37,21 +37,22 @@ class MainPage extends React.Component {
         this.state = {
             user: props.user,
             posts: [],
-            modalOpen: false,
             searchValue: '',
             items: [],
-            editingPost: {
-                isSelling: this.props.isSelling || true,
-                askingGold: this.props.askingGold || 0,
-                description: this.props.postText || '',
-                currentItemName: this.props.itemName || '',
+            modal: {
+                open: false,
+                isSelling: true,
+                askingGold: 0,
+                description: '',
+                itemName: '',
+                editing: false
             },
-            editing: false
         };
         this.handleModalClose = this.handleModalClose.bind(this);
         this.getPosts = this.getPosts.bind(this);
         this.search = this.search.bind(this);
         this.viewMyPosts = this.viewMyPosts.bind(this);
+        this.createPost = this.createPost.bind(this);
         this.editPost = this.editPost.bind(this);
     }
 
@@ -89,14 +90,41 @@ class MainPage extends React.Component {
     }
 
     handleModalClose() {
-        this.setState({modalOpen: false, editingPost: {}, editing: false})
+        this.setState({
+            modal: {
+                open: false,
+                isSelling: true,
+                askingGold: 0,
+                description: '',
+                itemName: '',
+                editing: false
+            }
+        });
+    }
+
+    createPost() {
+        this.setState({
+            modal: {
+                open: true,
+                isSelling: true,
+                askingGold: 0,
+                description: '',
+                itemName: '',
+                editing: false
+            }
+        });
     }
 
     editPost(post) {
         this.setState({
-            modalOpen: true,
-            editingPost: post,
-            editing: true
+            modal: {
+                open: true,
+                isSelling: post.isSelling,
+                askingGold: post.askingGold,
+                description: post.postText,
+                itemName: post.itemName,
+                editing: true
+            }
         });
     }
 
@@ -125,7 +153,7 @@ class MainPage extends React.Component {
                     </IconButton>
                 </Paper>
                 <div className='buttons'>
-                    <Button variant="contained" color="primary" className={this.props.classes.button} onClick={() => this.setState({modalOpen: true})}>
+                    <Button variant="contained" color="primary" className={this.props.classes.button} onClick={this.createPost}>
                         Create Post
                     </Button>
                     <Button variant="contained" color="primary" className={this.props.classes.button} onClick={this.viewMyPosts}>
@@ -135,7 +163,7 @@ class MainPage extends React.Component {
                 <div className='posts-container'>
                     {this.state.posts.map(post => <Post key={post.postID} {...post} currentUserId={this.state.user.userID} editPost={this.editPost} />)}
                 </div>
-                <PostModal open={this.state.modalOpen} handleClose={this.handleModalClose} items={this.state.items} reloadPosts={this.getPosts} currentUserId={this.props.user.userID} {...this.state.editingPost} editing={this.state.editing}/>
+                <PostModal open={this.state.modalOpen} handleClose={this.handleModalClose} items={this.state.items} reloadPosts={this.getPosts} currentUserId={this.props.user.userID} {...this.state.modal} />
             </div>
         );
     }

@@ -32,7 +32,14 @@ const styles = {
 class PostModal extends React.Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            currentItemName: '',
+            askingGold: '',
+            description: ''
+        };
         this.createPost = this.createPost.bind(this);
+        this.onClose = this.onClose.bind(this);
     }
 
     async createPost() {
@@ -54,11 +61,20 @@ class PostModal extends React.Component {
         }
     }
 
+    onClose() {
+        this.setState({
+            currentItemName: '',
+            askingGold: '',
+            description: '',
+            isSelling: true
+        });
+    }
+
     render() {
         return (
             <Modal
                 open={this.props.open}
-                onClose={this.props.handleClose}>
+                onClose={this.onClose}>
                     <Paper className={this.props.classes.paper}>
                         <h2>Create New Post</h2>
                         <div className='modal-options'>
@@ -66,7 +82,7 @@ class PostModal extends React.Component {
                                 select
                                 label="Select Item Names"
                                 className={this.props.classes.dropdown}
-                                value={this.state.currentItemName}
+                                value={this.state.currentItemName || this.props.itemName}
                                 onChange={(event) => this.setState({currentItemName: event.target.value})}
                                 SelectProps={{
                                     MenuProps: {
@@ -104,7 +120,7 @@ class PostModal extends React.Component {
                             </TextField>
                             <TextField
                                 className={this.props.classes.dropdown}
-                                value={this.state.askingGold}
+                                value={this.state.askingGold || this.props.askingGold}
                                 onChange={(event) => this.setState({askingGold: event.target.value})}
                                 margin="normal"
                                 label='Asking Gold'
@@ -121,6 +137,7 @@ class PostModal extends React.Component {
                             label="Description"
                             multiline
                             rows="4"
+                            value={this.state.description || this.props.description}
                             className={this.props.classes.textField}
                             onChange={(e) => this.setState({description: e.target.value})}
                             margin="normal"

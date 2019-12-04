@@ -82,7 +82,7 @@ class Post extends React.Component {
 
     editPost() {
         this.props.editPost({
-            goldCost: this.props.goldCost,
+            askingGold: this.props.goldCost,
             itemName: this.props.itemName,
             isSelling: this.props.isSelling,
             postID: this.props.postID,
