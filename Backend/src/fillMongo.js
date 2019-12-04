@@ -83,6 +83,7 @@ let generatePosts = async (users, items) => {
                 itemType: items[randItem].itemType,
                 itemID: items[randItem]._id
             },
+            itemNameLower: items[randItem].itemName.toLowerCase(),
             goldCost: getRndInteger(1,100000),
             postText: (isSelling ? "WTS" : "WTB") + ' ' + items[randItem].itemName,
             active: true,
@@ -91,7 +92,7 @@ let generatePosts = async (users, items) => {
         }
         posts.push(newPost)
     }
-    // add to DB
+    // add to DB, create index
     return await postsDB.createPost(posts)
 }
 

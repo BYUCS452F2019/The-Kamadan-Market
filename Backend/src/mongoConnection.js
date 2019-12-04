@@ -18,6 +18,9 @@ module.exports.getDBConnection = async () => {
         console.error(err)
         throw err
     })
+    await client.db("kamadanMarket").collection("Posts").createIndex("itemNameLower").catch((err) => {
+        console.error(err)
+    })
     return {
         "client": client,
         "db": client.db("kamadanMarket")
