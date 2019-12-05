@@ -21,7 +21,6 @@ module.exports.getPosts = async (keyWord = "") => {
     console.log(resp)
     return resp
 }
-module.exports.getPosts()
 
 module.exports.createPost = async (postInfo) => {
     let connection = await getDBConnection()
