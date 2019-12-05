@@ -75,27 +75,15 @@ class Post extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            icon: ItemTypeIcons[props.typeName]
+            icon: ItemTypeIcons[props.item.itemType]
         };
-        this.editPost = this.editPost.bind(this);
-    }
-
-    editPost() {
-        this.props.editPost({
-            askingGold: this.props.goldCost,
-            itemName: this.props.itemName,
-            isSelling: this.props.isSelling,
-            postID: this.props.postID,
-            postText: this.props.postText,
-            gamertag: this.props.gamertag
-        });
     }
 
     render() {
         return (
             <Paper className={this.props.classes.paper}>
                 <div className='post-header'>
-                    <div className='post-item-name'>{this.props.itemName}</div>
+                    <div className='post-item-name'>{this.props.item.itemName}</div>
                     <div className='post-buy-or-sell'>{this.props.isSelling ? 'Selling' : 'Buying'}</div>
                 </div>
                 <div className='post-subtitle'>
@@ -104,7 +92,7 @@ class Post extends React.Component {
                             <this.state.icon />
                         </div>
                     </IconContext.Provider>
-                    {this.props.typeName}
+                    {this.props.item.itemType}
                 </div>
                 <div className='post-subtitle'>
                     <IconContext.Provider value={{ className: 'post-item-icon' }}>
@@ -117,13 +105,9 @@ class Post extends React.Component {
                 <p className='post-description'>{this.props.postText}</p>
                 <div className='post-footer'>
                     <div className='post-gamertag'>
-                        {this.props.gamertag}
-                        {this.props.currentUserId === this.props.userID?
-                            <div className='post-edit-delete'>
-                                <span className='post-edit' onClick={this.editPost}>Edit</span>
-                                {' | '}
-                                <span className='post-delete'>Delete</span>
-                            </div>
+                        {this.props.user.gamertag}
+                        {this.props.currentUserId === this.props.user.userID?
+                            <span className='post-delete'>Delete</span>
                             :
                             ''
                         }

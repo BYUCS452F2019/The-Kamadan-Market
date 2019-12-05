@@ -15,4 +15,19 @@ module.exports.createUser = async (userInfo) => {
     }
     connection["client"].close()
     return resp.ops.length == 1 ? resp.ops[0] : resp.ops
-}
+};
+
+module.exports.loginUser = async (email, password) => {
+    let connection = await getDBConnection();
+    let db = connection["db"];
+    let resp = await db.collection("Users").find({
+        email,
+        password
+    }).toArray();
+    connection["client"].close();
+    if (resp.length === 1) {
+        return resp[0];
+    } else {
+        throw new Error('User not found');
+    }
+};

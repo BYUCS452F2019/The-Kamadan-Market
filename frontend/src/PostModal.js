@@ -35,15 +35,16 @@ class PostModal extends React.Component {
 
         this.state = {
             currentItemName: '',
-            askingGold: '',
-            description: ''
+            askingGold: 0,
+            description: '',
+            isSelling: true
         };
         this.createPost = this.createPost.bind(this);
         this.onClose = this.onClose.bind(this);
     }
 
     async createPost() {
-        console.log(this.props.items.find((el) => el.itemName === this.props.currentItemName))
+        console.log(this.props.items.find((el) => el.itemName === this.state.currentItemName))
         let body = {
             userID: this.props.currentUserId,
             itemID: this.props.items.find((el) => el.itemName === this.state.currentItemName).itemID,
@@ -82,7 +83,7 @@ class PostModal extends React.Component {
                                 select
                                 label="Select Item Names"
                                 className={this.props.classes.dropdown}
-                                value={this.state.currentItemName || this.props.itemName}
+                                value={this.state.currentItemName}
                                 onChange={(event) => this.setState({currentItemName: event.target.value})}
                                 SelectProps={{
                                     MenuProps: {
@@ -120,7 +121,7 @@ class PostModal extends React.Component {
                             </TextField>
                             <TextField
                                 className={this.props.classes.dropdown}
-                                value={this.state.askingGold || this.props.askingGold}
+                                value={this.state.askingGold}
                                 onChange={(event) => this.setState({askingGold: event.target.value})}
                                 margin="normal"
                                 label='Asking Gold'
@@ -137,7 +138,7 @@ class PostModal extends React.Component {
                             label="Description"
                             multiline
                             rows="4"
-                            value={this.state.description || this.props.description}
+                            value={this.state.description}
                             className={this.props.classes.textField}
                             onChange={(e) => this.setState({description: e.target.value})}
                             margin="normal"
