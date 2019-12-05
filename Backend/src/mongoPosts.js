@@ -5,7 +5,7 @@ let addLowerItemName =  (post) => {
     post.itemNameLower = post.item.itemName.toLowerCase()
 }
 
-module.exports.getPosts = async (keyWord) => {
+module.exports.getPosts = async (keyWord = "") => {
     let connection = await getDBConnection()
     let db = connection["db"]
     let reg = new RegExp("%" + keyWord ? keyWord.toLowerCase() : "" + "%")
@@ -15,11 +15,13 @@ module.exports.getPosts = async (keyWord) => {
         sort: [["_id", "desc"]]
     }).toArray()
     for(let i = 0; i < resp.length; i++){
-        resp[i].time = ObjectID.getTimestamp(resp[i]._id)
+        resp[i].time = (new ObjectID(resp[i]._id)).getTimestamp()
     }
     connection["client"].close()
+    console.log(resp)
     return resp
 }
+module.exports.getPosts()
 
 module.exports.createPost = async (postInfo) => {
     let connection = await getDBConnection()
@@ -63,5 +65,3 @@ module.exports.deletePost = async (postID) => {
     connection["client"].close()
     return resp
 }
-
-module.exports.deletePost("5de71bc4b06d0247b254d7a6")
