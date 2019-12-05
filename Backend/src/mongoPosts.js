@@ -14,6 +14,9 @@ module.exports.getPosts = async (keyWord) => {
     }, {
         sort: [["_id", "desc"]]
     }).toArray()
+    for(let i = 0; i < resp.length; i++){
+        resp[i].time = ObjectID.getTimestamp(resp[i]._id)
+    }
     connection["client"].close()
     return resp
 }
@@ -34,9 +37,6 @@ module.exports.createPost = async (postInfo) => {
         resp = await db.collection("Posts").insertOne(postInfo).catch((err) => {
             console.error(err)
         })
-    }
-    for(let i = 0; i < resp.length; i++){
-        resp[i].time = ObjectID.getTimestamp(resp[i]._id)
     }
     connection["client"].close()
     return resp.ops.length == 1 ? resp.ops[0] : resp.ops
