@@ -44,13 +44,18 @@ class PostModal extends React.Component {
     }
 
     async createPost() {
-        console.log(this.props.items.find((el) => el.itemName === this.state.currentItemName))
+        let currentItem = this.props.items.find((el) => el.itemName === this.state.currentItemName);
         let body = {
-            userID: this.props.currentUserId,
-            itemID: this.props.items.find((el) => el.itemName === this.state.currentItemName).itemID,
+            user: {
+                userID: this.props.currentUser._id,
+                gamertag: this.props.currentUser.gamertag
+            },
+            item: currentItem,
             postText: this.state.description,
             goldCost: parseInt(this.state.askingGold),
-            isSelling: this.state.isSelling
+            isSelling: this.state.isSelling,
+            barters: [],
+            itemNameLower: currentItem.itemName.toLowerCase()
         }
         console.log(body);
         try {

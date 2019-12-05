@@ -161,9 +161,9 @@ class MainPage extends React.Component {
                     </Button>
                 </div>
                 <div className='posts-container'>
-                    {this.state.posts.map(post => <Post key={post._id} {...post} currentUserId={this.state.user.userID} editPost={this.editPost} />)}
+                    {this.state.posts.map(post => <Post key={post._id} {...post} currentUserId={this.state.user._id} reloadPosts={this.getPosts} />)}
                 </div>
-                <PostModal open={this.state.modalOpen} handleClose={this.handleModalClose} items={this.state.items} reloadPosts={this.getPosts} currentUserId={this.props.user.userID} {...this.state.modal} />
+                <PostModal open={this.state.modalOpen} handleClose={this.handleModalClose} items={this.state.items} reloadPosts={this.getPosts} currentUser={this.props.user} {...this.state.modal} />
             </div>
         );
     }

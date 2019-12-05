@@ -3,6 +3,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { Paper } from '@material-ui/core';
 import moment from 'moment';
 import { IconContext } from "react-icons";
+import API from './API';
 import {
     GiSwapBag as ContainerIcon,
     GiScrollUnfurled as ConsumableIcon,
@@ -77,6 +78,12 @@ class Post extends React.Component {
         this.state = {
             icon: ItemTypeIcons[props.item.itemType]
         };
+        this.deletePost = this.deletePost.bind(this);
+    }
+
+    async deletePost() {
+        await API.delete(`posts/${this.props._id}`);
+        this.props.reloadPosts();
     }
 
     render() {
@@ -106,8 +113,8 @@ class Post extends React.Component {
                 <div className='post-footer'>
                     <div className='post-gamertag'>
                         {this.props.user.gamertag}
-                        {this.props.currentUserId === this.props.user.userID?
-                            <span className='post-delete'>Delete</span>
+                        {this.props.currentUserId === this.props.user._id?
+                            <div className='post-delete' onClick={this.deletePost}>Delete</div>
                             :
                             ''
                         }
