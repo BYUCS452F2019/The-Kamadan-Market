@@ -18,7 +18,6 @@ module.exports.getPosts = async (keyWord = "") => {
         resp[i].time = (new ObjectID(resp[i]._id)).getTimestamp()
     }
     connection["client"].close()
-    console.log(resp)
     return resp
 }
 
