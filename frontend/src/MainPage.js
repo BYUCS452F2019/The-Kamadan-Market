@@ -64,9 +64,10 @@ class MainPage extends React.Component {
     async getPosts() {
         try {
             const {data} = await API.get('posts/');
+            console.log('Posts: ', data);
             this.setState({posts: data});
         } catch (ex) {
-            console.log(ex);
+            console.error(ex);
         }
     }
 
@@ -74,7 +75,6 @@ class MainPage extends React.Component {
         try {
             const {data} = await API.get('items/');
             this.setState({items: data});
-            console.log("items: ", data);
         } catch (ex) {
             console.log(ex);
         }
@@ -161,7 +161,7 @@ class MainPage extends React.Component {
                     </Button>
                 </div>
                 <div className='posts-container'>
-                    {this.state.posts.map(post => <Post key={post.postID} {...post} currentUserId={this.state.user.userID} editPost={this.editPost} />)}
+                    {this.state.posts.map(post => <Post key={post._id} {...post} currentUserId={this.state.user.userID} editPost={this.editPost} />)}
                 </div>
                 <PostModal open={this.state.modalOpen} handleClose={this.handleModalClose} items={this.state.items} reloadPosts={this.getPosts} currentUserId={this.props.user.userID} {...this.state.modal} />
             </div>

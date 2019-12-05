@@ -93,8 +93,6 @@ module.exports.createPost = async (req, res) => {
     }
 }
 
-module.exports.newPost = newPost
-
 module.exports.newBarter = async (barterInfo) => {
     let results = await knex('BarterOptions').insert(barterInfo)
     return results[0]
